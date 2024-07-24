@@ -285,8 +285,7 @@ public class RobotThread extends Thread {
         }
     }
 
-    public void autoMove() {
-        matrix = BoxRecognizer.getMatrix();
+    public int emptyCount() {
         int emptyCount = 0;
         for (int i = 1; i < matrix.length - 1; i++) {
             for (int j = 1; j < matrix[0].length - 1; j++) {
@@ -295,6 +294,12 @@ public class RobotThread extends Thread {
                 }
             }
         }
+        return emptyCount;
+    }
+
+    public void autoMove() {
+        matrix = BoxRecognizer.getMatrix();
+        int emptyCount = emptyCount();
         // 如果全空或全满，需要大幅度移动
         boolean isFullMove = (emptyCount == 0 || emptyCount == (matrix.length - 2) * (matrix[0].length - 2));
         switch (direction) {

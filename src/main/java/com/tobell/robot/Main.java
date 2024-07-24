@@ -7,6 +7,6 @@ package com.tobell.robot;
  **/
 public class Main {
     public static void main(String[] args) {
-        new MineRobot(900,4900,7800, "down");
+        new MineRobot(1000,5000,7800, "down");
     }
 }
