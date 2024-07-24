@@ -15,14 +15,14 @@ import java.io.IOException;
  * @date 2024/7/16 上午8:24
  **/
 public class BoxRecognizer {
-    
+
     static final Color BORDER_TOP = new Color(255, 255, 255);
     static final Color BORDER_BOTTOM = new Color(100, 100, 100);
-    
+
     static final Color CONTENT_EMPTY = new Color(169, 169, 169);
     static final Color CONTENT_BOOM = new Color(0, 0, 0);
     static final Color CHEST_OPEN = new Color(77, 53, 38);
-    
+
     static final Color CONTENT_ZERO = new Color(240, 240, 240);
     static final Color CONTENT_ONE = new Color(86, 105, 221);
     static final Color CONTENT_TWO = new Color(14, 166, 64);
@@ -31,9 +31,9 @@ public class BoxRecognizer {
     static final Color CONTENT_FIVE = new Color(159, 49, 47);
     static final Color CONTENT_SIX = new Color(16, 133, 130);
     static final Color CONTENT_SEVEN = new Color(51, 50, 50);
-    
+
     static Robot robot;
-    
+
     static {
         try {
             robot = new Robot();
@@ -41,7 +41,7 @@ public class BoxRecognizer {
             throw new RuntimeException(e);
         }
     }
-    
+
     /**
      * 0 ~ 7 相应数字
      * 8 未知空盒子
@@ -83,7 +83,7 @@ public class BoxRecognizer {
         }
         return -1;
     }
-    
+
     /**
      * 抓取当前屏幕信息（截屏）
      */
@@ -91,7 +91,7 @@ public class BoxRecognizer {
         Rectangle rect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
         return robot.createScreenCapture(rect);
     }
-    
+
     /**
      * 图像各个采样点 RGB 采样，拿到图像识别结果
      */
@@ -125,7 +125,7 @@ public class BoxRecognizer {
         }
         return matrix;
     }
-    
+
     /**
      * 从现有文件得到识别矩阵
      */
@@ -138,14 +138,14 @@ public class BoxRecognizer {
         }
         return getMatrix(img);
     }
-    
+
     /**
      * 从当前屏幕得到识别矩阵
      */
     public static int[][] getMatrix() {
         return getMatrix(getScreen());
     }
-    
+
     /**
      * 如果踩炸，自动复活
      */
@@ -156,7 +156,7 @@ public class BoxRecognizer {
                 robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
                 robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
                 Thread.sleep(100);
-                if (new Color(getScreen().getRGB(500, 155)).equals(new Color(28, 54, 58))){
+                if (new Color(getScreen().getRGB(500, 155)).equals(new Color(28, 54, 58))) {
                     Thread.sleep(5900);
                     robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
                     robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);

@@ -1,11 +1,7 @@
 package com.tobell.robot;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +11,7 @@ import java.util.List;
  * @date 2024/7/16 上午11:06
  **/
 public class RobotThread extends Thread {
-    
+
     private int x;
     private int y;
     private boolean canAuto;
@@ -27,7 +23,7 @@ public class RobotThread extends Thread {
     private Robot robot;
     private MoveThread moveThread;
     private int chestCount = 0;
-    
+
     {
         try {
             robot = new Robot();
@@ -35,7 +31,7 @@ public class RobotThread extends Thread {
             throw new RuntimeException(e);
         }
     }
-    
+
     public RobotThread(int x, int y, boolean canAuto, int limit, String direction) {
         this.x = x;
         this.y = y;
@@ -45,7 +41,7 @@ public class RobotThread extends Thread {
         this.limit = limit;
         this.direction = direction;
     }
-    
+
     @Override
     public void run() {
         do {
@@ -65,7 +61,7 @@ public class RobotThread extends Thread {
             }
         } while (!interrupted() && canAuto);
     }
-    
+
     /**
      * 简单搜素算法
      * 这里不使用 Box 实例是为了更高的搜索效率
@@ -86,7 +82,7 @@ public class RobotThread extends Thread {
                             int emptyCount = getSurroundingEmptyCount(j, i);
                             int mineCount = getSurroundingMineCount(j, i);
                             // 如果有必要，点击
-                            if (emptyCount != 0){
+                            if (emptyCount != 0) {
                                 if ((matrix[i][j] == emptyCount + mineCount && i != 1 && j != 1 && i != matrix.length - 2 && j != matrix[0].length - 2) || matrix[i][j] == mineCount) {
                                     robot.mouseMove(20 + 75 * (j - 1), 190 + 75 * (i - 1));
                                     robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
@@ -114,7 +110,7 @@ public class RobotThread extends Thread {
         }
         return hasClicked;
     }
-    
+
     /**
      * 使用定式搜素
      */
@@ -209,31 +205,31 @@ public class RobotThread extends Thread {
         }
         return hasClicked;
     }
-    
+
     public List<Box> getSurroundingEmptyBoxes(Box box) {
         return getSurroundingBoxes(box, 8, 8);
     }
-    
+
     public int getSurroundingEmptyCount(int x1, int y1) {
         return getSurroundingCount(x1, y1, 8, 8);
     }
-    
+
     public List<Box> getSurroundingNumberBoxes(Box box) {
         return getSurroundingBoxes(box, 1, 7);
     }
-    
+
     public int getSurroundingNumberCount(int x1, int y1) {
         return getSurroundingCount(x1, y1, 1, 7);
     }
-    
+
     public List<Box> getSurroundingMineBoxes(Box box) {
         return getSurroundingBoxes(box, 9, 9);
     }
-    
+
     public int getSurroundingMineCount(int x1, int y1) {
         return getSurroundingCount(x1, y1, 9, 9);
     }
-    
+
     private List<Box> getSurroundingBoxes(Box box, int from, int to) {
         List<Box> boxes = new ArrayList<>();
         for (int j = box.x - 1; j < box.x + 2; j++) {
@@ -245,7 +241,7 @@ public class RobotThread extends Thread {
         }
         return boxes;
     }
-    
+
     private int getSurroundingCount(int x1, int y1, int from, int to) {
         int mineCount = 0;
         for (int j = x1 - 1; j < x1 + 2; j++) {
@@ -257,7 +253,7 @@ public class RobotThread extends Thread {
         }
         return mineCount;
     }
-    
+
     public void openChest() {
         try {
             sleep(400);
@@ -288,7 +284,7 @@ public class RobotThread extends Thread {
             throw new RuntimeException(e);
         }
     }
-    
+
     public void autoMove() {
         matrix = BoxRecognizer.getMatrix();
         int emptyCount = 0;

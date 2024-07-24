@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
  * @date 2024/7/16 下午8:33
  **/
 public class MineRobot {
-    
+
     public int x;
     public int y;
     public int limit;
@@ -26,7 +26,7 @@ public class MineRobot {
     public static final int K = 8;
     RobotThread robotThread;
     MoveThread moveThread;
-    
+
     public MineRobot(int x, int y, int limit, String direction) {
         this.x = x;
         this.y = y;
@@ -34,26 +34,26 @@ public class MineRobot {
         this.direction = direction;
         init();
     }
-    
+
     private void auto() {
         if (robotThread == null || !robotThread.isAlive()) {
             robotThread = new RobotThread(x, y, true, limit, direction);
             robotThread.start();
         }
     }
-    
+
     private void stop() {
         robotThread.interrupt();
         robotThread = null;
     }
-    
+
     private void step() {
         if (robotThread == null || !robotThread.isAlive()) {
             robotThread = new RobotThread(x, y, false, limit, direction);
             robotThread.start();
         }
     }
-    
+
     /**
      * 初始化键盘监听
      */
